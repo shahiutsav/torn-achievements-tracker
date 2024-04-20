@@ -22,26 +22,29 @@ export default function HonorsList({ honors }: { honors: Honor[] }) {
     const honorType = type as keyof typeof HonorType;
     const valueOfHonorType = getHonorTypeIndex(HonorType[honorType]);
     honorsOfType = honors.filter(
-      (honor: Honor) => honor.type === valueOfHonorType
+      (honor: Honor) => honor.type === valueOfHonorType,
     );
   }
 
   return (
     <React.Fragment>
-      {honorsOfType.map((singleHonor: any, index: number) => {
-        const honor = singleHonor as Honor;
-
-        return (
-          <Card key={index}>
-            <CardHeader>
-              <CardTitle>{honor.name}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>{honor.description}</CardDescription>
-            </CardContent>
-          </Card>
-        );
-      })}
+      <ul className="space-y-4 px-4 py-4">
+        {honorsOfType.map((singleHonor: any, index: number) => {
+          const honor = singleHonor as Honor;
+          return (
+            <li key={index}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{honor.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>{honor.description}</CardDescription>
+                </CardContent>
+              </Card>
+            </li>
+          );
+        })}
+      </ul>
     </React.Fragment>
   );
 }

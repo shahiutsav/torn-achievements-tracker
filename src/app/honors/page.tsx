@@ -24,8 +24,8 @@ export default async function HonorsPage() {
     };
   });
   return (
-    <React.Fragment>
+    <div className="pt-12">
       <HonorsList honors={honorsList} />
-    </React.Fragment>
+    </div>
   );
 }
