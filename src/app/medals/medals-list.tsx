@@ -13,35 +13,35 @@ import { useSearchParams } from "next/navigation";
 import { HonorType, getHonorTypeIndex } from "@/definitions/enums/honor-type";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { MedalType } from "@/definitions/enums/medal-type";
 
-export default function HonorsList({
-  honors,
-  achievedHonors,
+export default function MedalsList({
+  medals,
+  achievedMedals,
 }: {
-  honors: Honor[];
-  achievedHonors: number[];
+  medals: Medal[];
+  achievedMedals: number[];
 }) {
   const filterParams = useSearchParams();
   const type = filterParams.get("type");
 
-  let honorsOfType: Honor[] = honors;
+  let medalsOfType: Medal[] = medals;
 
   if (type) {
-    const honorType = type as keyof typeof HonorType;
-    const valueOfHonorType = getHonorTypeIndex(HonorType[honorType]);
-    honorsOfType = honors.filter(
-      (honor: Honor) => honor.type === valueOfHonorType,
-    );
+    const medalType = type as keyof typeof MedalType;
+    medalsOfType = medals.filter((medal: Medal) => {
+      return medal.type === medalType;
+    });
   }
 
   return (
     <React.Fragment>
       <div className="container mx-auto">
         <ul className="grid gap-4 px-4 py-4 sm:grid-cols-2 lg:pt-0 xl:grid-cols-3 2xl:grid-cols-4">
-          {honorsOfType.map((singleHonor: any, index: number) => {
+          {medalsOfType.map((singleHonor: any, index: number) => {
             const honor = singleHonor as Honor;
 
-            const isHonorAwarded = achievedHonors.includes(honor.id);
+            const isHonorAwarded = achievedMedals.includes(honor.id);
 
             return (
               <li key={index}>

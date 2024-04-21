@@ -35,7 +35,7 @@ export default async function HonorsPage() {
   });
 
   return (
-    <div className="pt-12">
+    <div className="pt-12 lg:pt-9">
       <HonorsList honors={honorsList} achievedHonors={achievedHonors} />
     </div>
   );

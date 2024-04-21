@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { MedalType } from "@/definitions/enums/medal-type";
 
 export default function NavigationBar() {
   return (
@@ -98,14 +99,42 @@ function NavigationItems({
                     variant={"ghost"}
                     className="w-full justify-start"
                   >
-                    <Link href={`?type=${key}`}>{value}</Link>
+                    <Link href={`/honors?type=${key}`}>{value}</Link>
                   </Button>
                 </li>
               );
             })}
           </ul>
         </li>
-        <li>Medals</li>
+        <li>
+          <Button
+            asChild
+            onClick={() => setIsOpen && setIsOpen(false)}
+            variant={"ghost"}
+            className="w-full lg:justify-start"
+          >
+            <h1 className="mt-6 text-xl font-bold">
+              <Link href={"/medals"}>Medals</Link>
+            </h1>
+          </Button>
+          <ul className="mt-3">
+            {/* Map from the MedalType enum */}
+            {Object.entries(MedalType).map(([key, value], index) => {
+              return (
+                <li key={index}>
+                  <Button
+                    asChild
+                    onClick={() => setIsOpen && setIsOpen(false)}
+                    variant={"ghost"}
+                    className="w-full justify-start"
+                  >
+                    <Link href={`/medals?type=${key}`}>{value}</Link>
+                  </Button>
+                </li>
+              );
+            })}
+          </ul>
+        </li>
       </ol>
     </nav>
   );
