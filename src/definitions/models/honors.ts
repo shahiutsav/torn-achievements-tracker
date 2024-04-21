@@ -1,5 +1,5 @@
 interface Honor {
-  id: string;
+  id: number;
   name: string;
   description: string;
   type: number;

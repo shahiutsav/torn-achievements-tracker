@@ -11,8 +11,16 @@ import {
 } from "@/components/ui/card";
 import { useSearchParams } from "next/navigation";
 import { HonorType, getHonorTypeIndex } from "@/definitions/enums/honor-type";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
-export default function HonorsList({ honors }: { honors: Honor[] }) {
+export default function HonorsList({
+  honors,
+  achievedHonors,
+}: {
+  honors: Honor[];
+  achievedHonors: number[];
+}) {
   const filterParams = useSearchParams();
   const type = filterParams.get("type");
 
@@ -32,11 +40,23 @@ export default function HonorsList({ honors }: { honors: Honor[] }) {
         <ul className="grid gap-4 px-4 py-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {honorsOfType.map((singleHonor: any, index: number) => {
             const honor = singleHonor as Honor;
+
+            const isHonorAwarded = achievedHonors.includes(honor.id);
+
             return (
-              <li key={index} className="h-full">
-                <Card className="h-full">
+              <li key={index}>
+                <Card className={cn("h-full", isHonorAwarded && "opacity-50")}>
                   <CardHeader>
-                    <CardTitle>{honor.name}</CardTitle>
+                    <CardTitle className={"flex justify-between"}>
+                      <div
+                        className={cn(
+                          isHonorAwarded && "text-slate-500 line-through",
+                        )}
+                      >
+                        {honor.name}
+                      </div>
+                      {isHonorAwarded && <Badge>Awarded</Badge>}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>{honor.description}</CardDescription>
