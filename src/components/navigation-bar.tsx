@@ -10,19 +10,26 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
-export default function Sidebar() {
+export default function NavigationBar() {
+  return (
+    <React.Fragment>
+      <TopBar />
+      <Sidebar />
+    </React.Fragment>
+  );
+}
+
+function TopBar() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <div className="fixed top-0 flex h-12 w-full ">
+    <div className="fixed top-0 flex h-12 w-full lg:hidden">
       <div className="flex flex-1 items-center justify-end bg-slate-800/50 px-3 backdrop-blur-md">
         <Drawer
           open={isOpen}
@@ -39,6 +46,7 @@ export default function Sidebar() {
               </DrawerClose>
             </DrawerHeader>
             <NavigationItems
+              className="max-h-[calc(100dvh-64px)] overflow-y-auto"
               setIsOpen={(isOpen: boolean) => {
                 setIsOpen(isOpen);
               }}
@@ -50,20 +58,30 @@ export default function Sidebar() {
   );
 }
 
+function Sidebar() {
+  return (
+    <div className="fixed left-0 top-0 hidden h-dvh w-56 overflow-y-auto border-r py-9 lg:block">
+      <NavigationItems />
+    </div>
+  );
+}
+
 function NavigationItems({
   setIsOpen,
+  className,
 }: {
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpen?: (isOpen: boolean) => void | undefined;
+  className?: string;
 }) {
   return (
-    <nav className="max-h-[calc(100dvh-64px)] overflow-y-auto px-6">
+    <nav className={cn(`px-6`, className)}>
       <ol>
         <li>
           <Button
             asChild
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpen && setIsOpen(false)}
             variant={"ghost"}
-            className="w-full"
+            className="w-full lg:justify-start"
           >
             <h1 className="text-xl font-bold">
               <Link href={"/honors"}>Honors</Link>
@@ -76,7 +94,7 @@ function NavigationItems({
                 <li key={index}>
                   <Button
                     asChild
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => setIsOpen && setIsOpen(false)}
                     variant={"ghost"}
                     className="w-full justify-start"
                   >

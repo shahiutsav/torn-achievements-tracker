@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/sidebar";
+import NavigationBar from "@/components/navigation-bar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Sidebar />
-        <main>{children}</main>
+        <NavigationBar />
+        <main className="ml-auto mr-0 box-border lg:max-w-[calc(100%-14rem)]">
+          {children}
+        </main>
       </body>
     </html>
   );
