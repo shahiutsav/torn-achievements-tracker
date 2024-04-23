@@ -1,5 +1,6 @@
-import React from "react";
-import MedalsList from "./medals-list";
+import React, { Suspense } from "react";
+import MedalsList from "./components/medals-list";
+import Loading from "@/components/loading";
 
 const TORN_API_KEY = process.env.API_KEY;
 
@@ -36,7 +37,11 @@ export default async function MedalsPage() {
 
   return (
     <div className="pt-12 lg:pt-9">
-      <MedalsList medals={medalsList} achievedMedals={achievedMedals} />
+      <div className="container mx-auto">
+        <Suspense fallback={<Loading />}>
+          <MedalsList medals={medalsList} achievedMedals={achievedMedals} />
+        </Suspense>
+      </div>
     </div>
   );
 }

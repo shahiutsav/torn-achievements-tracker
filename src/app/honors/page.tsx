@@ -1,5 +1,6 @@
-import React from "react";
-import HonorsList from "./honors-list";
+import React, { Suspense } from "react";
+import HonorsList from "./components/honors-list";
+import Loading from "@/components/loading";
 
 const TORN_API_KEY = process.env.API_KEY;
 
@@ -36,7 +37,9 @@ export default async function HonorsPage() {
 
   return (
     <div className="pt-12 lg:pt-9">
-      <HonorsList honors={honorsList} achievedHonors={achievedHonors} />
+      <Suspense fallback={<Loading />}>
+        <HonorsList honors={honorsList} achievedHonors={achievedHonors} />
+      </Suspense>
     </div>
   );
 }
